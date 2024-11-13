@@ -9,13 +9,11 @@ using System.Threading;
 public class RemotePlayerController : MonoBehaviour
 {
     
-    public bool Dpressed, Wpressed, Apressed, spacePressed, shiftPressed;
+    public bool Apressed, Wpressed, Spressed, Dpressed, Qpressed, Epressed;
 
     //Paràmetres de moviment del jugador
     [SerializeField] private float movSpeed = 10f;
-    [SerializeField] private float jumpForce = 5f;
     private Rigidbody rb;
-    private bool isJumping = false;
 
     //Variables de xarxa
     private Socket udpSocket;
@@ -60,11 +58,6 @@ public class RemotePlayerController : MonoBehaviour
 
         rb.MovePosition(rb.position + movement * movSpeed * Time.deltaTime);
 
-        if (spacePressed && !isJumping)
-        {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            isJumping = true;
-        }
     }
 
     private void SendInputData()
@@ -87,14 +80,6 @@ public class RemotePlayerController : MonoBehaviour
 
             //Deserialitzar dades
             JsonUtility.FromJsonOverwrite(jsonData, this);
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isJumping = false;
         }
     }
 

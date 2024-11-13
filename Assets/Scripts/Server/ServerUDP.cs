@@ -8,14 +8,15 @@ using TMPro;
 public class ServerUDP : MonoBehaviour
 {
     Socket socket;
-
     public GameObject UItextObj;
     TextMeshProUGUI UItext;
     string serverText;
+    RemoteInputs remoteBrawlerInputs;
 
     void Start()
     {
         UItext = UItextObj.GetComponent<TextMeshProUGUI>();
+        remoteBrawlerInputs = GameObject.FindGameObjectWithTag("OnlineScripts").GetComponent<RemoteInputs>();
     }
 
     public void startServer()
@@ -70,16 +71,25 @@ public class ServerUDP : MonoBehaviour
             //TO DO 4
             //When our UDP server receives a message from a random remote, it has to send a ping,
             //Call a send thread
-            Thread sendThread = new Thread(() => Send(Remote));
+            Thread sendThread = new Thread(() => SendData(Remote));
             sendThread.Start();
         }
     }
 
-    void Send(EndPoint Remote)
+    void SendData(EndPoint Remote)
     {
         //TO DO 4
         //Use socket.SendTo to send a ping using the remote we stored earlier.
-        byte[] data = Encoding.ASCII.GetBytes("Ping");
+        //byte[] data = Encoding.ASCII.GetBytes("Ping");
+        byte[] data = Serialize.instance.SerializeJson().GetBuffer();
         socket.SendTo(data, Remote);
+    }
+
+    void RecieveData()
+    {
+        byte[] receiveData = new byte[1024];
+        listen.ReceiveFrom(receiveData, ref client);
+        Serialize.instance.DeserializeJson(receiveData, ref remoteBrawlerInputs);
+
     }
 }
