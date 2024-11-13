@@ -49,14 +49,14 @@ public class ClientUDP : MonoBehaviour
         //TO DO 5
         //We'll wait for a server response,
         //so you can already start the receive thread
-        Thread receive = new Thread(Receive);
+        Thread receive = new Thread(ReceiveData);
         receive.Start();
     }
 
     //TO DO 5
     //Same as in the server, in this case the remote is a bit useless
     //since we already know it's the server who's communicating with us
-    void Receive()
+    void ReceiveData()
     {
         IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
         EndPoint Remote = (EndPoint)sender;
