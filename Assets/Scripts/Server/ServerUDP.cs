@@ -8,6 +8,7 @@ using TMPro;
 public class ServerUDP : MonoBehaviour
 {
     Socket socket;
+    EndPoint RemoteClient;
     public GameObject UItextObj;
     TextMeshProUGUI UItext;
     string serverText;
@@ -56,7 +57,7 @@ public class ServerUDP : MonoBehaviour
         //We don't know who may be communicating with this server, so we have to create an
         //endpoint with any address and an IPEndPoint from it to reply to it later.
         IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
-        EndPoint RemoteClient = (EndPoint)sender;
+        RemoteClient = (EndPoint)sender;
 
         //Loop the whole process, and start receiving messages directed to our socket
         //(the one we binded to a port before)
@@ -88,7 +89,7 @@ public class ServerUDP : MonoBehaviour
     void RecieveData()
     {
         byte[] receiveData = new byte[1024];
-        listen.ReceiveFrom(receiveData, ref RemoteClient);
+        socket.ReceiveFrom(receiveData, ref RemoteClient);
         Serialize.instance.DeserializeJson(receiveData, ref remoteInputs);
     }
 }
