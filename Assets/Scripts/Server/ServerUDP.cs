@@ -11,12 +11,12 @@ public class ServerUDP : MonoBehaviour
     public GameObject UItextObj;
     TextMeshProUGUI UItext;
     string serverText;
-    RemoteInputs remoteBrawlerInputs;
+    RemoteInputs remoteInputs;
 
     void Start()
     {
         UItext = UItextObj.GetComponent<TextMeshProUGUI>();
-        remoteBrawlerInputs = GameObject.FindGameObjectWithTag("OnlineScripts").GetComponent<RemoteInputs>();
+        remoteInputs = GameObject.FindGameObjectWithTag("OnlineScripts").GetComponent<RemoteInputs>();
     }
 
     public void startServer()
@@ -56,7 +56,7 @@ public class ServerUDP : MonoBehaviour
         //We don't know who may be communicating with this server, so we have to create an
         //endpoint with any address and an IPEndPoint from it to reply to it later.
         IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
-        EndPoint Remote = (EndPoint)sender;
+        EndPoint RemoteClient = (EndPoint)sender;
 
         //Loop the whole process, and start receiving messages directed to our socket
         //(the one we binded to a port before)
@@ -64,32 +64,31 @@ public class ServerUDP : MonoBehaviour
         //this address (the client) and reply to it on TO DO 4
         while (true)
         {
-            recv = socket.ReceiveFrom(data, ref Remote);
-            serverText = serverText + "\n" + "Message received from " + Remote.ToString();
+            recv = socket.ReceiveFrom(data, ref RemoteClient);
+            serverText = serverText + "\n" + "Message received from " + RemoteClient.ToString();
             serverText = serverText + "\n" + Encoding.ASCII.GetString(data, 0, recv);
 
             //TO DO 4
             //When our UDP server receives a message from a random remote, it has to send a ping,
             //Call a send thread
-            Thread sendThread = new Thread(() => SendData(Remote));
+            Thread sendThread = new Thread(() => SendData(RemoteClient));
             sendThread.Start();
         }
     }
 
-    void SendData(EndPoint Remote)
+    void SendData(EndPoint RemoteClient)
     {
         //TO DO 4
         //Use socket.SendTo to send a ping using the remote we stored earlier.
         //byte[] data = Encoding.ASCII.GetBytes("Ping");
         byte[] data = Serialize.instance.SerializeJson().GetBuffer();
-        socket.SendTo(data, Remote);
+        socket.SendTo(data, RemoteClient);
     }
 
     void RecieveData()
     {
         byte[] receiveData = new byte[1024];
-        listen.ReceiveFrom(receiveData, ref client);
-        Serialize.instance.DeserializeJson(receiveData, ref remoteBrawlerInputs);
-
+        listen.ReceiveFrom(receiveData, ref RemoteClient);
+        Serialize.instance.DeserializeJson(receiveData, ref remoteInputs);
     }
 }

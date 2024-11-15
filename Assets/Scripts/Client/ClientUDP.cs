@@ -11,12 +11,13 @@ public class ClientUDP : MonoBehaviour
     public GameObject UItextObj;
     TextMeshProUGUI UItext;
     string clientText;
+    RemoteInputs remoteInputs;
 
     // Start is called before the first frame update
     void Start()
     {
         UItext = UItextObj.GetComponent<TextMeshProUGUI>();
-
+        remoteInputs = GameObject.FindGameObjectWithTag("OnlineScripts").GetComponent<RemoteInputs>();
     }
     public void StartClient()
     {
@@ -49,21 +50,36 @@ public class ClientUDP : MonoBehaviour
         //TO DO 5
         //We'll wait for a server response,
         //so you can already start the receive thread
-        Thread receive = new Thread(ReceiveData);
+        Thread receive = new Thread(Receive);
         receive.Start();
     }
 
     //TO DO 5
     //Same as in the server, in this case the remote is a bit useless
     //since we already know it's the server who's communicating with us
-    void ReceiveData()
+    void Receive()
     {
         IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
-        EndPoint Remote = (EndPoint)sender;
+        EndPoint RemoteServer = (EndPoint)sender;
         byte[] data = new byte[1024];
-        int recv = socket.ReceiveFrom(data, ref Remote);
+        int recv = socket.ReceiveFrom(data, ref RemoteServer);
 
-        clientText = $"Message received from {Remote.ToString()}:";
+        clientText = $"Message received from {RemoteServer.ToString()}:";
         clientText += "\n" + Encoding.ASCII.GetString(data, 0, recv);
     }
+
+    void SendData()
+    {
+        byte[] sendData = new byte[1024];
+        sendData = Serialize.instance.SerializeJson().GetBuffer();
+        listen.SendTo(sendData, sendData.Length, SocketFlags.None, endPoint);
+    }
+
+    void RecieveData()
+    {
+        byte[] receiveData = new byte[1024];
+        listen.ReceiveFrom(receiveData, ref RemoteServer);
+        Serialize.instance.DeserializeJson(receiveData, ref remoteInputs);
+    }
+
 }

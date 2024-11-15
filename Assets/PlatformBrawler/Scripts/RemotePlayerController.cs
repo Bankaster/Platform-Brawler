@@ -9,7 +9,7 @@ using System.Threading;
 
 public class RemotePlayerController : MonoBehaviour
 {
-    public RemoteInputs remoteInputs;  
+    public RemoteInputs finalRemoteInputs;  
 
     //Paràmetres de moviment del jugador
     [SerializeField] private float movSpeed = 10f;
@@ -52,9 +52,9 @@ public class RemotePlayerController : MonoBehaviour
     {
         Vector3 movement = Vector3.zero;
 
-        if (remoteInputs.Apressed) movement += Vector3.left;
-        if (remoteInputs.Dpressed) movement += Vector3.right;
-        if (remoteInputs.Wpressed) movement += Vector3.forward;
+        if (finalRemoteInputs.Apressed) movement += Vector3.left;
+        if (finalRemoteInputs.Dpressed) movement += Vector3.right;
+        if (finalRemoteInputs.Wpressed) movement += Vector3.forward;
 
         rb.MovePosition(rb.position + movement * movSpeed * Time.deltaTime);
     }
@@ -62,7 +62,7 @@ public class RemotePlayerController : MonoBehaviour
     private void SendInputData()
     {
         //Serialitzar inputs a JSON
-        string jsonData = JsonUtility.ToJson(remoteInputs);
+        string jsonData = JsonUtility.ToJson(finalRemoteInputs);
         byte[] data = Encoding.ASCII.GetBytes(jsonData);
 
         //Enviar dades al servidor
@@ -78,7 +78,7 @@ public class RemotePlayerController : MonoBehaviour
             string jsonData = Encoding.ASCII.GetString(buffer, 0, recv);
 
             //Deserialitzar dades a remoteInputs
-            JsonUtility.FromJsonOverwrite(jsonData, remoteInputs);
+            JsonUtility.FromJsonOverwrite(jsonData, finalRemoteInputs);
         }
     }
 
