@@ -12,7 +12,9 @@ public class Serialize : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if (instance == null)
+              instance = this;
+
         stream = new MemoryStream();
     }
 
@@ -33,29 +35,29 @@ public class Serialize : MonoBehaviour
         remoteInputs.Epressed = false;
 
         //Update Movement
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A))
         {
             remoteInputs.Apressed = true;
         }
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             remoteInputs.Wpressed = true;
         }
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.S))
         {
             remoteInputs.Spressed = true;
         }
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D))
         {
             remoteInputs.Dpressed = true;
         }
 
         //Update Rotation
-        if (Input.GetKey(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             remoteInputs.Qpressed = true;
         }
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             remoteInputs.Epressed = true;
         }
@@ -77,7 +79,6 @@ public class Serialize : MonoBehaviour
         BinaryReader reader = new BinaryReader(stream);
         stream.Seek(0, SeekOrigin.Begin);
         string json = reader.ReadString();
-        Debug.Log(json);
         JsonUtility.FromJsonOverwrite(json, serializedThings);
     }
 }

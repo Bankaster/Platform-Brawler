@@ -24,12 +24,13 @@ public class ClientUDP : MonoBehaviour
     void Start()
     {
         UItext = UItextObj.GetComponent<TextMeshProUGUI>();
+        DontDestroyOnLoad(gameObject);
     }
     public void StartClient()
     {
         Thread mainThread = new Thread(Send);
         mainThread.Start();
-        DontDestroyOnLoad(gameObject);
+        
     }
 
     void Update()
@@ -85,6 +86,11 @@ public class ClientUDP : MonoBehaviour
 
         clientText = $"Message received from {RemoteServer.ToString()}:";
         clientText += "\n" + Encoding.ASCII.GetString(data, 0, recv);
+
+        Thread threadSend = new Thread(() => SendData());
+        threadSend.Start();
+        Thread threadRecieve = new Thread(() => RecieveData());
+        threadRecieve.Start();
     }
 
     void SendData()

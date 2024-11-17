@@ -25,7 +25,6 @@ public class ServerUDP : MonoBehaviour
 
     public void startServer()
     {
-        //TO DO 1
         //UDP doesn't keep track of our connections like TCP
         //This means that we "can only" reply to other endpoints,
         //since we don't know where or who they are
@@ -35,7 +34,6 @@ public class ServerUDP : MonoBehaviour
         socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
         socket.Bind(ipep);
 
-        //TO DO 3
         //Our client is sending a handshake, the server has to be able to receive it
         //It's time to call the Receive thread
         Thread newConnection = new Thread(Receive);
@@ -62,38 +60,41 @@ public class ServerUDP : MonoBehaviour
         int recv;
         byte[] data = new byte[1024];
 
-        //TO DO 3
         //We don't know who may be communicating with this server, so we have to create an
         //endpoint with any address and an IPEndPoint from it to reply to it later.
         IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
         RemoteClient = (EndPoint)sender;
 
+
+        //When our UDP server receives a message from a random remote, it has to send a ping,
+        //Call a send thread
+        Thread sendThread = new Thread(() => SendData());
+        sendThread.Start();
+        Thread recieveThread = new Thread(() => RecieveData());
+        recieveThread.Start();
+
         //Loop the whole process, and start receiving messages directed to our socket
         //(the one we binded to a port before)
         //When using socket.ReceiveFrom, be sure to send our remote as a reference so we can keep
-        //this address (the client) and reply to it on TO DO 4
         while (true)
         {
             recv = socket.ReceiveFrom(data, ref RemoteClient);
-
-            //TO DO 4
-            //When our UDP server receives a message from a random remote, it has to send a ping,
-            //Call a send thread
-            Thread sendThread = new Thread(() => SendData(RemoteClient));
-            sendThread.Start();
             goToGame = true;
         }
+
     }
 
-    void SendData(EndPoint RemoteClient)
+    void SendData()
     {
-        //TO DO 4
+
         //Use socket.SendTo to send a ping using the remote we stored earlier.
         //byte[] data = Encoding.ASCII.GetBytes("Ping");
         while (!exitGameLoop)
         {
-            byte[] data = Serialize.instance.SerializeJson().GetBuffer();
-            socket.SendTo(data, RemoteClient);
+            if (OnlineManager.instance == null || Serialize.instance == null) continue;
+            byte[] data = new byte[1024]; 
+            data = Serialize.instance.SerializeJson().GetBuffer();
+            socket.SendTo(data, data.Length, SocketFlags.None, RemoteClient);
         }
     }
 
@@ -101,6 +102,7 @@ public class ServerUDP : MonoBehaviour
     {
         while (!exitGameLoop)
         {
+            if (OnlineManager.instance == null || Serialize.instance == null) continue;
             if (!remoteInputs)
             {
                 asignInputClass = true;
