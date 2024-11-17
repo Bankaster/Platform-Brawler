@@ -7,7 +7,7 @@ public class BrawlerController : MonoBehaviour
     public float movSpeed = 10f;
     public float rotationSpeed = 100f;
 
-    public Vector3 respawnPosition = new Vector3(0, 1, 0);
+    public Vector3 respawnPosition = new Vector3(-5f, 0.5f, 0f);
     private Rigidbody rb;
 
     // Start is called before the first frame update

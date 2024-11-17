@@ -10,9 +10,7 @@ public class ServerUDP : MonoBehaviour
 {
     Socket socket;
     EndPoint RemoteClient;
-    public GameObject UItextObj;
     TextMeshProUGUI UItext;
-    string serverText;
     RemoteInputs remoteInputs;
 
     public bool goToGame = false;
@@ -22,14 +20,11 @@ public class ServerUDP : MonoBehaviour
 
     void Start()
     {
-        UItext = UItextObj.GetComponent<TextMeshProUGUI>();
-      //  remoteInputs = GameObject.FindGameObjectWithTag("OnlineManager").GetComponent<RemoteInputs>();
+
     }
 
     public void startServer()
     {
-        serverText = "Starting UDP Server *bee bop bee bop*...";
-
         //TO DO 1
         //UDP doesn't keep track of our connections like TCP
         //This means that we "can only" reply to other endpoints,
@@ -50,8 +45,6 @@ public class ServerUDP : MonoBehaviour
 
     void Update()
     {
-        UItext.text = serverText;
-
         if (goToGame)
         {
             goToGame = false;
@@ -69,8 +62,6 @@ public class ServerUDP : MonoBehaviour
         int recv;
         byte[] data = new byte[1024];
 
-        serverText = serverText + "\n" + "Waiting for new Client...";
-
         //TO DO 3
         //We don't know who may be communicating with this server, so we have to create an
         //endpoint with any address and an IPEndPoint from it to reply to it later.
@@ -84,8 +75,6 @@ public class ServerUDP : MonoBehaviour
         while (true)
         {
             recv = socket.ReceiveFrom(data, ref RemoteClient);
-            serverText = serverText + "\n" + "Message received from " + RemoteClient.ToString();
-            serverText = serverText + "\n" + Encoding.ASCII.GetString(data, 0, recv);
 
             //TO DO 4
             //When our UDP server receives a message from a random remote, it has to send a ping,

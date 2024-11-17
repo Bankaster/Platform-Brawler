@@ -24,8 +24,6 @@ public class ClientUDP : MonoBehaviour
     void Start()
     {
         UItext = UItextObj.GetComponent<TextMeshProUGUI>();
-       // remoteInputs = GameObject.FindGameObjectWithTag("OnlineManager").GetComponent<RemoteInputs>();
-
     }
     public void StartClient()
     {

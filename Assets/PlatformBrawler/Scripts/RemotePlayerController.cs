@@ -1,91 +1,62 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading;
-
 
 public class RemotePlayerController : MonoBehaviour
 {
     public RemoteInputs finalRemoteInputs;  
 
-    //Paràmetres de moviment del jugador
-    [SerializeField] private float movSpeed = 10f;
-    private Rigidbody rb;
+    private float movSpeed = 10f;
+    public float rotationSpeed = 100f;
 
-    //Variables de xarxa
-    private Socket udpSocket;
-    private EndPoint remoteEndPoint;
-    private IPEndPoint serverEndPoint;
-    private bool connected = false;
-    private Thread receiveThread;
+    public Vector3 respawnPosition = new Vector3(5f, 0.5f, 0f);
+    private Rigidbody rb;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-
-        //Configuració del socket UDP
-        udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-        serverEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8000);
-        remoteEndPoint = (EndPoint)serverEndPoint;
-
-        //Iniciar el fil per rebre dades
-        receiveThread = new Thread(new ThreadStart(ReceiveData));
-        receiveThread.Start();
+        finalRemoteInputs = GameObject.FindGameObjectWithTag("OnlineManager").GetComponent<RemoteInputs>();
     }
 
     void Update()
     {
-        if (connected)
-        {
-            //Enviar inputs actuals al servidor
-            SendInputData();
-
-            //Actualitzar moviment del jugador
-            MovePlayer();
-        }
+        MovePlayer();
     }
 
     private void MovePlayer()
     {
         Vector3 movement = Vector3.zero;
 
+        //Remote Cube Movement
         if (finalRemoteInputs.Apressed) movement += Vector3.left;
         if (finalRemoteInputs.Dpressed) movement += Vector3.right;
         if (finalRemoteInputs.Wpressed) movement += Vector3.forward;
+        if (finalRemoteInputs.Spressed) movement += Vector3.back;
+
+        //Remote Cube Rotation
+        if (finalRemoteInputs.Qpressed)
+        {
+            transform.Rotate(Vector3.up, -rotationSpeed * Time.deltaTime);
+        }
+
+        if (finalRemoteInputs.Epressed)
+        {
+            transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
+        }
 
         rb.MovePosition(rb.position + movement * movSpeed * Time.deltaTime);
     }
-
-    private void SendInputData()
+    /*
+    void OnTriggerEnter(Collider other)
     {
-        //Serialitzar inputs a JSON
-        string jsonData = JsonUtility.ToJson(finalRemoteInputs);
-        byte[] data = Encoding.ASCII.GetBytes(jsonData);
-
-        //Enviar dades al servidor
-        udpSocket.SendTo(data, remoteEndPoint);
-    }
-
-    private void ReceiveData()
-    {
-        byte[] buffer = new byte[1024];
-        while (true)
+        //Respawn Function
+        if (other.CompareTag("Death"))
         {
-            int recv = udpSocket.ReceiveFrom(buffer, ref remoteEndPoint);
-            string jsonData = Encoding.ASCII.GetString(buffer, 0, recv);
-
-            //Deserialitzar dades a remoteInputs
-            JsonUtility.FromJsonOverwrite(jsonData, finalRemoteInputs);
+            transform.position = respawnPosition;
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
         }
     }
-
-    private void OnApplicationQuit()
-    {
-        receiveThread.Abort();
-        udpSocket.Close();
-    }
+    */
 } 
 

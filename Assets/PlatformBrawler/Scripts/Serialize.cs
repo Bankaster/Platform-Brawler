@@ -77,6 +77,7 @@ public class Serialize : MonoBehaviour
         BinaryReader reader = new BinaryReader(stream);
         stream.Seek(0, SeekOrigin.Begin);
         string json = reader.ReadString();
+        Debug.Log(json);
         JsonUtility.FromJsonOverwrite(json, serializedThings);
     }
 }
