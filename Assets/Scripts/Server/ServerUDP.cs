@@ -4,6 +4,7 @@ using System.Text;
 using UnityEngine;
 using System.Threading;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class ServerUDP : MonoBehaviour
 {
@@ -14,10 +15,15 @@ public class ServerUDP : MonoBehaviour
     string serverText;
     RemoteInputs remoteInputs;
 
+    public bool goToGame = false;
+    bool asignInputClass = false;
+    bool exitGameLoop = false;
+
+
     void Start()
     {
         UItext = UItextObj.GetComponent<TextMeshProUGUI>();
-        remoteInputs = GameObject.FindGameObjectWithTag("OnlineScripts").GetComponent<RemoteInputs>();
+      //  remoteInputs = GameObject.FindGameObjectWithTag("OnlineManager").GetComponent<RemoteInputs>();
     }
 
     public void startServer()
@@ -39,11 +45,23 @@ public class ServerUDP : MonoBehaviour
         //It's time to call the Receive thread
         Thread newConnection = new Thread(Receive);
         newConnection.Start();
+        DontDestroyOnLoad(gameObject);
     }
 
     void Update()
     {
         UItext.text = serverText;
+
+        if (goToGame)
+        {
+            goToGame = false;
+            SceneManager.LoadScene(1);
+        }
+        else if (asignInputClass)
+        {
+            asignInputClass = false;
+            remoteInputs = GameObject.FindGameObjectWithTag("OnlineManager").GetComponent<RemoteInputs>();
+        }
     }
 
     void Receive()
@@ -74,6 +92,7 @@ public class ServerUDP : MonoBehaviour
             //Call a send thread
             Thread sendThread = new Thread(() => SendData(RemoteClient));
             sendThread.Start();
+            goToGame = true;
         }
     }
 
@@ -82,14 +101,32 @@ public class ServerUDP : MonoBehaviour
         //TO DO 4
         //Use socket.SendTo to send a ping using the remote we stored earlier.
         //byte[] data = Encoding.ASCII.GetBytes("Ping");
-        byte[] data = Serialize.instance.SerializeJson().GetBuffer();
-        socket.SendTo(data, RemoteClient);
+        while (!exitGameLoop)
+        {
+            byte[] data = Serialize.instance.SerializeJson().GetBuffer();
+            socket.SendTo(data, RemoteClient);
+        }
     }
 
     void RecieveData()
     {
-        byte[] receiveData = new byte[1024];
-        socket.ReceiveFrom(receiveData, ref RemoteClient);
-        Serialize.instance.DeserializeJson(receiveData, ref remoteInputs);
+        while (!exitGameLoop)
+        {
+            if (!remoteInputs)
+            {
+                asignInputClass = true;
+                continue;
+            }
+
+            byte[] receiveData = new byte[1024];
+            socket.ReceiveFrom(receiveData, ref RemoteClient);
+            Serialize.instance.DeserializeJson(receiveData, ref remoteInputs);
+        }
+
+    }
+
+    private void OnApplicationQuit()
+    {
+        exitGameLoop = true;
     }
 }

@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Death
+  - Server
+  - Client
+  - OnlineManager
   layers:
   - Default
   - TransparentFX
