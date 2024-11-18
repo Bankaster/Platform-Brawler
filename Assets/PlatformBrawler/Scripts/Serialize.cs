@@ -35,29 +35,29 @@ public class Serialize : MonoBehaviour
         remoteInputs.Epressed = false;
 
         //Update Movement
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKey(KeyCode.A))
         {
             remoteInputs.Apressed = true;
         }
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKey(KeyCode.W))
         {
             remoteInputs.Wpressed = true;
         }
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKey(KeyCode.S))
         {
             remoteInputs.Spressed = true;
         }
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKey(KeyCode.D))
         {
             remoteInputs.Dpressed = true;
         }
 
         //Update Rotation
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKey(KeyCode.Q))
         {
             remoteInputs.Qpressed = true;
         }
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKey(KeyCode.E))
         {
             remoteInputs.Epressed = true;
         }

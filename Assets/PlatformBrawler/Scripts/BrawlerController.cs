@@ -32,6 +32,8 @@ public class BrawlerController : MonoBehaviour
         //Cube Movement
         Vector3 movement = new Vector3(movHorizontal, 0.0f, movVertical);
         transform.Translate(movement * movSpeed * Time.deltaTime, Space.World);
+        
+        //rb.velocity = new Vector3 (movHorizontal * movSpeed, 0, movVertical * movSpeed);
 
         //Cube Rotation
         if (Input.GetKey(KeyCode.Q))

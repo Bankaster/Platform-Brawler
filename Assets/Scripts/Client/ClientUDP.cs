@@ -64,7 +64,7 @@ public class ClientUDP : MonoBehaviour
         //This time, our UDP socket doesn't have it, so we have to pass it
         //as a parameter on its SendTo() method
         byte[] data = Encoding.ASCII.GetBytes("OMG");
-        socket.SendTo(data, ipep);
+        socket.SendTo(data, data.Length, SocketFlags.None, ipep);
 
         //TO DO 5
         //We'll wait for a server response,
@@ -97,6 +97,7 @@ public class ClientUDP : MonoBehaviour
     {
         while (!exitGameLoop)
         {
+            if (OnlineManager.instance == null || Serialize.instance == null) continue;
             byte[] sendData = new byte[1024];
             sendData = Serialize.instance.SerializeJson().GetBuffer();
             socket.SendTo(sendData, sendData.Length, SocketFlags.None, ipep);
@@ -107,6 +108,7 @@ public class ClientUDP : MonoBehaviour
     {
         while (!exitGameLoop)
         {
+            if (OnlineManager.instance == null || Serialize.instance == null) continue;
             if (!remoteInputs)
             {
                 asignInputClass = true;

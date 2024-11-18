@@ -65,6 +65,8 @@ public class ServerUDP : MonoBehaviour
         IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
         RemoteClient = (EndPoint)sender;
 
+        recv = socket.ReceiveFrom(data, ref RemoteClient);
+        goToGame = true;
 
         //When our UDP server receives a message from a random remote, it has to send a ping,
         //Call a send thread
@@ -78,8 +80,7 @@ public class ServerUDP : MonoBehaviour
         //When using socket.ReceiveFrom, be sure to send our remote as a reference so we can keep
         while (true)
         {
-            recv = socket.ReceiveFrom(data, ref RemoteClient);
-            goToGame = true;
+
         }
 
     }
