@@ -33,6 +33,7 @@ public class Serialize : MonoBehaviour
         remoteInputs.Dpressed = false;
         remoteInputs.Qpressed = false;
         remoteInputs.Epressed = false;
+        remoteInputs.SpacePressed = false;
 
         //Update Movement
         if (Input.GetKey(KeyCode.A))
@@ -60,6 +61,12 @@ public class Serialize : MonoBehaviour
         if (Input.GetKey(KeyCode.E))
         {
             remoteInputs.Epressed = true;
+        }
+
+        //Update Attack
+        if (Input.GetKey(KeyCode.Space))
+        {
+            remoteInputs.SpacePressed = true;   
         }
     }
 
