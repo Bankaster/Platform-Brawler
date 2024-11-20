@@ -7,8 +7,11 @@ public class BrawlerController : MonoBehaviour
     public float movSpeed = 10f;
     public float rotationSpeed = 100f;
 
-    public Vector3 respawnPosition = new Vector3(-5f, 0.5f, 0f);
+    public Vector3 respawnPosition = new Vector3(0f, 3f, 0f);
     private Rigidbody rb;
+    public Rigidbody rbPusher;
+
+    private Animator player_animator;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +23,8 @@ public class BrawlerController : MonoBehaviour
             rb = gameObject.AddComponent<Rigidbody>();
         }
 
+        player_animator = GetComponent<Animator>();
+
         rb.useGravity = true;
     }
 
@@ -29,13 +34,11 @@ public class BrawlerController : MonoBehaviour
         float movHorizontal = Input.GetAxis("Horizontal");
         float movVertical = Input.GetAxis("Vertical");
 
-        //Cube Movement
+        //Player Movement
         Vector3 movement = new Vector3(movHorizontal, 0.0f, movVertical);
         transform.Translate(movement * movSpeed * Time.deltaTime, Space.World);
         
-        //rb.velocity = new Vector3 (movHorizontal * movSpeed, 0, movVertical * movSpeed);
-
-        //Cube Rotation
+        //Player Rotation
         if (Input.GetKey(KeyCode.Q))
         {
             transform.Rotate(Vector3.up, -rotationSpeed * Time.deltaTime);
@@ -45,6 +48,17 @@ public class BrawlerController : MonoBehaviour
         {
             transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
         }
+
+        //Player Attack
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            player_animator.SetTrigger("Attack");
+        }
+    }
+
+    public void AddForce()
+    {
+        rbPusher.AddForce(10, 0, 0, ForceMode.Impulse);
     }
 
     void OnTriggerEnter(Collider other)

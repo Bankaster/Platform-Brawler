@@ -9,13 +9,17 @@ public class RemotePlayerController : MonoBehaviour
     private float movSpeed = 10f;
     public float rotationSpeed = 100f;
 
-    public Vector3 respawnPosition = new Vector3(5f, 0.5f, 0f);
+    public Vector3 respawnPosition = new Vector3(0f, 3f, 0f);
     private Rigidbody rb;
+    public Rigidbody rbPusher;
+
+    private Animator remote_player_animator;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         finalRemoteInputs = GameObject.FindGameObjectWithTag("OnlineManager").GetComponent<RemoteInputs>();
+        remote_player_animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -44,8 +48,20 @@ public class RemotePlayerController : MonoBehaviour
             transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
         }
 
+        //Player Attack
+        if (finalRemoteInputs.SpacePressed)
+        {
+            remote_player_animator.SetTrigger("Attack");
+        }
+
         rb.MovePosition(rb.position + movement * movSpeed * Time.deltaTime);
     }
+
+    public void AddForce()
+    {
+        rbPusher.AddForce(10, 0, 0, ForceMode.Impulse);
+    }
+
     /*
     void OnTriggerEnter(Collider other)
     {

@@ -10,6 +10,7 @@ public class RemoteInputs : MonoBehaviour
     public bool Dpressed = false;
     public bool Qpressed = false;
     public bool Epressed = false;
+    public bool SpacePressed = false;
 
     public void ResetMovement()
     {
@@ -22,5 +23,8 @@ public class RemoteInputs : MonoBehaviour
         //Reset Rotation
         Qpressed = false;
         Epressed = false;
+
+        //Reset Attack
+        SpacePressed = false;
     }
 }
