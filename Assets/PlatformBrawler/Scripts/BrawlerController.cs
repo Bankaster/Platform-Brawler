@@ -57,7 +57,7 @@ public class BrawlerController : MonoBehaviour
 
     public void AddForce()
     {
-        float forceMagnitude = 50f;
+        float forceMagnitude = 20f;
         Vector3 forceDirection = transform.right;
         Vector3 force = forceDirection * forceMagnitude;
         rbPusher.AddForce(force, ForceMode.Impulse);

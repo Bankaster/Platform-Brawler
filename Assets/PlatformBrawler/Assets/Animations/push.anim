@@ -200,7 +200,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1
+  - time: 0.33333334
     functionName: ResetForce
     data: 
     objectReferenceParameter: {fileID: 0}
