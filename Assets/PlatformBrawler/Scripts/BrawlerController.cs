@@ -60,15 +60,21 @@ public class BrawlerController : MonoBehaviour
     {
         rbPusher.AddForce(10, 0, 0, ForceMode.Impulse);
     }
+    public void ResetForce()
+    {
+        rbPusher.AddForce(0, 0, 0);
+    }
 
     void OnTriggerEnter(Collider other)
     {
         //Respawn Function
-        if (other.CompareTag("Death"))
+        if (other.CompareTag("Death") & this.CompareTag("Player1"))
         {
             transform.position = respawnPosition;
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
+            rbPusher.velocity = Vector3.zero;
+            rbPusher.angularVelocity = Vector3.zero;
         }
     }
 }
