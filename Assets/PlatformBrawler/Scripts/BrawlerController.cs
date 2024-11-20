@@ -55,6 +55,7 @@ public class BrawlerController : MonoBehaviour
         }
     }
 
+    //Player Attack Event
     public void AddForce()
     {
         float forceMagnitude = 20f;
@@ -62,6 +63,7 @@ public class BrawlerController : MonoBehaviour
         Vector3 force = forceDirection * forceMagnitude;
         rbPusher.AddForce(force, ForceMode.Impulse);
     }
+
     public void ResetForce()
     {
         rbPusher.AddForce(0, 0, 0);

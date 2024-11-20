@@ -31,13 +31,13 @@ public class RemotePlayerController : MonoBehaviour
     {
         Vector3 movement = Vector3.zero;
 
-        //Remote Cube Movement
+        //Remote Player Movement
         if (finalRemoteInputs.Apressed) movement += Vector3.left;
         if (finalRemoteInputs.Dpressed) movement += Vector3.right;
         if (finalRemoteInputs.Wpressed) movement += Vector3.forward;
         if (finalRemoteInputs.Spressed) movement += Vector3.back;
 
-        //Remote Cube Rotation
+        //Remote Player Rotation
         if (finalRemoteInputs.Qpressed)
         {
             transform.Rotate(Vector3.up, -rotationSpeed * Time.deltaTime);
@@ -48,7 +48,7 @@ public class RemotePlayerController : MonoBehaviour
             transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
         }
 
-        //Player Attack
+        //Remote Player Attack
         if (finalRemoteInputs.SpacePressed)
         {
             remote_player_animator.SetTrigger("Attack");
@@ -57,6 +57,7 @@ public class RemotePlayerController : MonoBehaviour
         rb.MovePosition(rb.position + movement * movSpeed * Time.deltaTime);
     }
 
+    //Remote Player Attack Event
     public void AddForce()
     {
         float forceMagnitude = 20f;
@@ -64,6 +65,7 @@ public class RemotePlayerController : MonoBehaviour
         Vector3 force = forceDirection * forceMagnitude;
         rbPusher.AddForce(force, ForceMode.Impulse);
     }
+
     public void ResetForce()
     {
         rbPusher.AddForce(0, 0, 0);
