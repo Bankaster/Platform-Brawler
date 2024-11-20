@@ -59,7 +59,10 @@ public class RemotePlayerController : MonoBehaviour
 
     public void AddForce()
     {
-        rbPusher.AddForce(10, 0, 0, ForceMode.Impulse);
+        float forceMagnitude = 50f;
+        Vector3 forceDirection = transform.right;
+        Vector3 force = forceDirection * forceMagnitude;
+        rbPusher.AddForce(force, ForceMode.Impulse);
     }
     public void ResetForce()
     {

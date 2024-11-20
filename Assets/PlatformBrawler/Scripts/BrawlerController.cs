@@ -10,7 +10,6 @@ public class BrawlerController : MonoBehaviour
     public Vector3 respawnPosition = new Vector3(0f, 3f, 0f);
     private Rigidbody rb;
     public Rigidbody rbPusher;
-
     private Animator player_animator;
 
     // Start is called before the first frame update
@@ -58,7 +57,10 @@ public class BrawlerController : MonoBehaviour
 
     public void AddForce()
     {
-        rbPusher.AddForce(10, 0, 0, ForceMode.Impulse);
+        float forceMagnitude = 50f;
+        Vector3 forceDirection = transform.right;
+        Vector3 force = forceDirection * forceMagnitude;
+        rbPusher.AddForce(force, ForceMode.Impulse);
     }
     public void ResetForce()
     {
