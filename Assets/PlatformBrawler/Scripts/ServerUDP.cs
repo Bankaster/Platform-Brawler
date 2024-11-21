@@ -10,17 +10,47 @@ public class ServerUDP : MonoBehaviour
 {
     Socket socket;
     EndPoint RemoteClient;
-    TextMeshProUGUI UItext;
     RemoteInputs remoteInputs;
+
+    public TextMeshProUGUI UItext;
+
+    string serverIP;
 
     public bool goToGame = false;
     bool asignInputClass = false;
     bool exitGameLoop = false;
 
 
+    public string GetLocalIPAddress()
+    {
+        string localIP = "No IP found";
+
+        try
+        {
+            
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                
+                if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                {
+                    localIP = ip.ToString();
+                    break;
+                }
+            }
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError($"Error: {ex.Message}");
+        }
+
+        return localIP;
+    }
+
     void Start()
     {
-
+        serverIP = GetLocalIPAddress();
+        Debug.Log($"IP adress: {serverIP}");
     }
 
     public void startServer()
@@ -33,6 +63,8 @@ public class ServerUDP : MonoBehaviour
         IPEndPoint ipep = new IPEndPoint(IPAddress.Any, 9050);
         socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
         socket.Bind(ipep);
+
+        UItext.text = $"Server IP adress: {serverIP}";
 
         //Our client is sending a handshake, the server has to be able to receive it
         //It's time to call the Receive thread

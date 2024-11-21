@@ -2,6 +2,7 @@
 using System.Net.Sockets;
 using System.Text;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Threading;
 using TMPro;
 using UnityEngine.SceneManagement;
@@ -12,6 +13,7 @@ public class ClientUDP : MonoBehaviour
     EndPoint RemoteServer;
     IPEndPoint ipep;
     public GameObject UItextObj;
+    public InputField ipInputField;
     TextMeshProUGUI UItext;
     string clientText;
     RemoteInputs remoteInputs;
@@ -28,9 +30,34 @@ public class ClientUDP : MonoBehaviour
     }
     public void StartClient()
     {
-        Thread mainThread = new Thread(Send);
-        mainThread.Start();
-        
+        string serverIP = ipInputField.text;
+
+        if (string.IsNullOrEmpty(serverIP))
+        {
+            Debug.LogError("Please, write a valid IP.");
+            return;
+        }
+
+        try
+        {
+            // Configurar el endpoint con la IP ingresada
+            ipep = new IPEndPoint(IPAddress.Parse(serverIP), 9050);
+            socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+
+            // Enviar el handshake
+            byte[] data = Encoding.ASCII.GetBytes("OMG");
+            socket.SendTo(data, data.Length, SocketFlags.None, ipep);
+
+            // Iniciar el hilo para recibir datos
+            Thread receive = new Thread(Receive);
+            receive.Start();
+
+            goToGame = true;
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Error connecting to server: {e.Message}");
+        }
     }
 
     void Update()
