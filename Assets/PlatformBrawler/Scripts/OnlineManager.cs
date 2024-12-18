@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class OnlineManager : MonoBehaviour
 {
-    //Singleton instance
-    public static OnlineManager instance;
+    static public OnlineManager instance;
 
     [SerializeField] BrawlerController Player1Controller;
     [SerializeField] BrawlerController Player2Controller;
@@ -14,34 +13,29 @@ public class OnlineManager : MonoBehaviour
 
     private void Awake()
     {
-        //Ensure only one instance exists
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
+        instance = this; 
 
-        DontDestroyOnLoad(gameObject);
     }
 
+    // Start is called before the first frame update
     void Start()
     {
-        //Check if this is running on the server or client
         if (GameObject.FindGameObjectWithTag("Server"))
         {
-            //Enable local Player1 and remote Player2 on the server
-            if (Player1Controller) Player1Controller.enabled = true;
-            if (Player2RemoteController) Player2RemoteController.enabled = true;
+            Player1Controller.enabled = true;
+            Player2RemoteController.enabled = true;
         }
         else
         {
-            //Enable local Player2 and remote Player1 on the client
-            if (Player2Controller) Player2Controller.enabled = true;
-            if (Player1RemoteController) Player1RemoteController.enabled = true;
+            Player2Controller.enabled = true;
+            Player1RemoteController.enabled = true;
         }
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 }

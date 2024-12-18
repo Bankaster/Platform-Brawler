@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class BrawlerController : MonoBehaviour
 {
-    public float movSpeed = 10f; //Movement speed of the player
-    public float rotationSpeed = 100f; //Rotation speed of the player
+    public float movSpeed = 10f;
+    public float rotationSpeed = 100f;
+
+   // public RemoteInputs remoteInputs;
 
     public Vector3 respawnPosition = new Vector3(0f, 3f, 0f);
     private Rigidbody rb;
     public Rigidbody rbPusher;
     private Animator player_animator;
 
-    private string playerID; //Unique ID for the player
-
-    //Start is called before the first frame update
+    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -23,16 +23,18 @@ public class BrawlerController : MonoBehaviour
         {
             rb = gameObject.AddComponent<Rigidbody>();
         }
+      /*  if (remoteInputs == null)
+        {
+            remoteInputs = new RemoteInputs(); 
+        }
+      */
 
         player_animator = GetComponent<Animator>();
 
         rb.useGravity = true;
-
-        //Assign playerID based on GameObject name
-        playerID = gameObject.name;
     }
 
-    //Update is called once per frame
+    // Update is called once per frame
     void Update()
     {
         float movHorizontal = Input.GetAxis("Horizontal");
@@ -41,7 +43,7 @@ public class BrawlerController : MonoBehaviour
         //Player Movement
         Vector3 movement = new Vector3(movHorizontal, 0.0f, movVertical);
         transform.Translate(movement * movSpeed * Time.deltaTime, Space.World);
-
+        
         //Player Rotation
         if (Input.GetKey(KeyCode.Q))
         {
@@ -53,39 +55,24 @@ public class BrawlerController : MonoBehaviour
             transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
         }
 
+       /* // Actualizar las entradas
+        remoteInputs.Apressed = Input.GetKey(KeyCode.A);
+        remoteInputs.Wpressed = Input.GetKey(KeyCode.W);
+        remoteInputs.Spressed = Input.GetKey(KeyCode.S);
+        remoteInputs.Dpressed = Input.GetKey(KeyCode.D);
+        remoteInputs.Qpressed = Input.GetKey(KeyCode.Q);
+        remoteInputs.Epressed = Input.GetKey(KeyCode.E);
+        remoteInputs.SpacePressed = Input.GetKey(KeyCode.Space);
+       */
+
         //Player Attack
         if (Input.GetKeyDown(KeyCode.Space))
         {
             player_animator.SetTrigger("Attack");
         }
-
-        //Send updated player state to ReplicationManager
-        SendPlayerState();
     }
 
-    //Send player state to the ReplicationManager for synchronization
-    private void SendPlayerState()
-    {
-        Vector3 rotation = transform.eulerAngles;
-        string action = GetCurrentAction();
-
-        ReplicationManager.instance.UpdatePlayerState(playerID, transform.position, rotation, action);
-    }
-
-    //Determine current player action
-    private string GetCurrentAction()
-    {
-        if (Input.GetKey(KeyCode.W)) return "MoveForward";
-        if (Input.GetKey(KeyCode.A)) return "MoveLeft";
-        if (Input.GetKey(KeyCode.S)) return "MoveBackward";
-        if (Input.GetKey(KeyCode.D)) return "MoveRight";
-        if (Input.GetKey(KeyCode.Q)) return "RotateLeft";
-        if (Input.GetKey(KeyCode.E)) return "RotateRight";
-        if (Input.GetKeyDown(KeyCode.Space)) return "Attack";
-        return "Idle";
-    }
-
-    // Player Attack Event
+    //Player Attack Event
     public void AddForce()
     {
         float forceMagnitude = 20f;
