@@ -10,6 +10,8 @@ public class Serialize : MonoBehaviour
     byte[] receiveInfo;
     RemoteInputs remoteInputs = new RemoteInputs();
 
+    public GameObject CharController;
+
     private void Awake()
     {
         if (instance == null)
@@ -68,6 +70,13 @@ public class Serialize : MonoBehaviour
         {
             remoteInputs.SpacePressed = true;   
         }
+
+        remoteInputs.pos = CharController.transform.position;
+        remoteInputs.rot = CharController.transform.rotation.y;
+
+       // remoteInputs.resultBlue = CharController.GetComponent<BrawlerController>().deathCount;
+      //  remoteInputs.resultRed = CharController.GetComponent<RemotePlayerController>().deathCount; ;
+
     }
 
     public MemoryStream SerializeJson()

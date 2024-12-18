@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Windows;
 
 public class RemotePlayerController : MonoBehaviour
 {
@@ -8,11 +10,13 @@ public class RemotePlayerController : MonoBehaviour
 
     private float movSpeed = 10f;
     public float rotationSpeed = 100f;
+    public float deathCount = 0;
+
+    public TextMeshProUGUI result;
 
     public Vector3 respawnPosition = new Vector3(0f, 3f, 0f);
     private Rigidbody rb;
     public Rigidbody rbPusher;
-
     private Animator remote_player_animator;
 
     void Start()
@@ -20,6 +24,7 @@ public class RemotePlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         finalRemoteInputs = GameObject.FindGameObjectWithTag("OnlineManager").GetComponent<RemoteInputs>();
         remote_player_animator = GetComponent<Animator>();
+        StartCoroutine(UpdatePositionCo());
     }
 
     void Update()
@@ -71,6 +76,20 @@ public class RemotePlayerController : MonoBehaviour
         rbPusher.AddForce(0, 0, 0);
     }
 
+    IEnumerator UpdatePositionCo()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1.0f);
+
+            transform.position = finalRemoteInputs.pos;
+
+            float rotY = transform.rotation.y;
+            rotY = finalRemoteInputs.rot;
+            Debug.Log("PositionUpdated");
+        }
+    }
+
     void OnTriggerEnter(Collider other)
     {
         //Respawn Function
@@ -81,6 +100,11 @@ public class RemotePlayerController : MonoBehaviour
             rb.angularVelocity = Vector3.zero;
             rbPusher.velocity = Vector3.zero;
             rbPusher.angularVelocity = Vector3.zero;
+
+            deathCount++;
+            finalRemoteInputs.resultRed = deathCount;
+
+            result.text = finalRemoteInputs.resultRed.ToString();
         }
     }
     
