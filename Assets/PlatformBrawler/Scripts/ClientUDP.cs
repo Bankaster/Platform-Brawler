@@ -22,11 +22,6 @@ public class ClientUDP : MonoBehaviour
     bool asignInputClass = false;
     bool exitGameLoop = false;
 
-    public Socket GetSocket()
-    {
-        return socket;  
-    }
-
     // Start is called before the first frame update
     void Start()
     {

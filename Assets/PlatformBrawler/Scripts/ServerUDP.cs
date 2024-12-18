@@ -46,10 +46,7 @@ public class ServerUDP : MonoBehaviour
 
         return localIP;
     }
-    public Socket GetSocket()
-    {
-        return socket;
-    }
+
     void Start()
     {
         serverIP = GetLocalIPAddress();

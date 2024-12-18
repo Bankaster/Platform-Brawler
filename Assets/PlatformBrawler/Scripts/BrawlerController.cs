@@ -11,8 +11,6 @@ public class BrawlerController : MonoBehaviour
 
     public TextMeshProUGUI result;
 
-   // public RemoteInputs remoteInputs;
-
     public Vector3 respawnPosition = new Vector3(0f, 3f, 0f);
     private Rigidbody rb;
     public Rigidbody rbPusher;
@@ -32,11 +30,6 @@ public class BrawlerController : MonoBehaviour
         {
             rb = gameObject.AddComponent<Rigidbody>();
         }
-      /*  if (remoteInputs == null)
-        {
-            remoteInputs = new RemoteInputs(); 
-        }
-      */
 
         player_animator = GetComponent<Animator>();
 
@@ -63,16 +56,6 @@ public class BrawlerController : MonoBehaviour
         {
             transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
         }
-
-       /* // Actualizar las entradas
-        remoteInputs.Apressed = Input.GetKey(KeyCode.A);
-        remoteInputs.Wpressed = Input.GetKey(KeyCode.W);
-        remoteInputs.Spressed = Input.GetKey(KeyCode.S);
-        remoteInputs.Dpressed = Input.GetKey(KeyCode.D);
-        remoteInputs.Qpressed = Input.GetKey(KeyCode.Q);
-        remoteInputs.Epressed = Input.GetKey(KeyCode.E);
-        remoteInputs.SpacePressed = Input.GetKey(KeyCode.Space);
-       */
 
         //Player Attack
         if (Input.GetKeyDown(KeyCode.Space))
