@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class BrawlerController : MonoBehaviour
 {
     public float movSpeed = 10f;
     public float rotationSpeed = 100f;
+    public float deathCount = 0;
+
+    public TextMeshProUGUI result;
 
    // public RemoteInputs remoteInputs;
 
@@ -14,10 +18,15 @@ public class BrawlerController : MonoBehaviour
     public Rigidbody rbPusher;
     private Animator player_animator;
 
+    public RemoteInputs reInputs;
+
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        reInputs = GameObject.FindGameObjectWithTag("OnlineManager").GetComponent<RemoteInputs>();
 
         if (rb == null)
         {
@@ -96,6 +105,12 @@ public class BrawlerController : MonoBehaviour
             rb.angularVelocity = Vector3.zero;
             rbPusher.velocity = Vector3.zero;
             rbPusher.angularVelocity = Vector3.zero;
+
+            deathCount++;
+            reInputs.resultBlue = deathCount;
+
+            result.text = reInputs.resultBlue.ToString();
+            
         }
     }
 }
