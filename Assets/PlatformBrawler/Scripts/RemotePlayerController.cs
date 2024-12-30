@@ -82,6 +82,12 @@ public class RemotePlayerController : MonoBehaviour
         {
             yield return new WaitForSeconds(1.0f);
 
+            while (Vector3.Distance(transform.position, finalRemoteInputs.pos) > 0.01f)
+            {
+                transform.position = Vector3.Lerp(transform.position, finalRemoteInputs.pos, 10 * Time.deltaTime);
+                yield return null;
+            }
+
             transform.position = finalRemoteInputs.pos;
 
             float rotY = transform.rotation.y;
