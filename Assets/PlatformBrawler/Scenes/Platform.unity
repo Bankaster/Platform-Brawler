@@ -923,6 +923,8 @@ MonoBehaviour:
   gameDuration: 20
   resultPanel: {fileID: 2114612019}
   winnerText: {fileID: 1837752802}
+  blueResult: {fileID: 1528940254}
+  redResult: {fileID: 128268364}
   blueDeathCount: 0
   redDeathCount: 0
 --- !u!4 &460227486
@@ -1240,7 +1242,6 @@ MonoBehaviour:
   deathCount: 0
   respawnPosition: {x: 0, y: 3, z: 0}
   rbPusher: {fileID: 799697356}
-  redResult: {fileID: 128268364}
   resultManager: {fileID: 460227485}
 --- !u!114 &554121822
 MonoBehaviour:
@@ -1259,7 +1260,6 @@ MonoBehaviour:
   deathCount: 0
   respawnPosition: {x: 0, y: 3, z: 0}
   rbPusher: {fileID: 799697356}
-  blueResult: {fileID: 1528940254}
   resultManager: {fileID: 460227485}
 --- !u!54 &554121823
 Rigidbody:
@@ -3073,7 +3073,6 @@ MonoBehaviour:
   deathCount: 0
   respawnPosition: {x: 0, y: 3, z: 0}
   rbPusher: {fileID: 1045689749}
-  redResult: {fileID: 128268364}
   resultManager: {fileID: 460227485}
 --- !u!114 &1232947759
 MonoBehaviour:
@@ -3092,7 +3091,6 @@ MonoBehaviour:
   deathCount: 0
   respawnPosition: {x: 0, y: 3, z: 0}
   rbPusher: {fileID: 1045689749}
-  blueResult: {fileID: 1528940254}
   resultManager: {fileID: 460227485}
 --- !u!54 &1232947760
 Rigidbody:
@@ -4871,7 +4869,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2114612020
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4881,7 +4879,7 @@ RectTransform:
   m_GameObject: {fileID: 2114612019}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.85, y: 0.85, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1837752801}
@@ -4905,7 +4903,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

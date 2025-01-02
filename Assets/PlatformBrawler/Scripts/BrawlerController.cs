@@ -14,7 +14,6 @@ public class BrawlerController : MonoBehaviour
     public Rigidbody rbPusher;
     private Animator player_animator;
 
-    public TextMeshProUGUI blueResult;
     public OnlineManager resultManager;
 
     // Start is called before the first frame update
@@ -87,7 +86,7 @@ public class BrawlerController : MonoBehaviour
 
             //Blue Player death counter
             resultManager.blueDeathCount++;
-            blueResult.text = resultManager.blueDeathCount.ToString();
+            resultManager.blueResult.text = resultManager.blueDeathCount.ToString();
         }
     }
 }

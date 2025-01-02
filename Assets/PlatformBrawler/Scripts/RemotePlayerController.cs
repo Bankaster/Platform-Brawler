@@ -17,7 +17,6 @@ public class RemotePlayerController : MonoBehaviour
     public Rigidbody rbPusher;
     private Animator remote_player_animator;
 
-    public TextMeshProUGUI redResult;
     public OnlineManager resultManager;
 
     void Start()
@@ -110,7 +109,7 @@ public class RemotePlayerController : MonoBehaviour
 
             //Red Player death counter
             resultManager.redDeathCount++;
-            redResult.text = resultManager.redDeathCount.ToString();
+            resultManager.redResult.text = resultManager.redDeathCount.ToString();
         }
     }
 } 

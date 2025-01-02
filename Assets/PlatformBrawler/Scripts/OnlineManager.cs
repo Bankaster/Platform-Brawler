@@ -24,6 +24,8 @@ public class OnlineManager : MonoBehaviour
     public GameObject resultPanel;
     public TextMeshProUGUI winnerText;
 
+    public TextMeshProUGUI blueResult;
+    public TextMeshProUGUI redResult;
     public float blueDeathCount = 0;
     public float redDeathCount = 0;
 
