@@ -12,12 +12,13 @@ public class RemotePlayerController : MonoBehaviour
     public float rotationSpeed = 100f;
     public float deathCount = 0;
 
-    public TextMeshProUGUI result;
-
     public Vector3 respawnPosition = new Vector3(0f, 3f, 0f);
     private Rigidbody rb;
     public Rigidbody rbPusher;
     private Animator remote_player_animator;
+
+    public TextMeshProUGUI redResult;
+    public OnlineManager resultManager;
 
     void Start()
     {
@@ -107,12 +108,10 @@ public class RemotePlayerController : MonoBehaviour
             rbPusher.velocity = Vector3.zero;
             rbPusher.angularVelocity = Vector3.zero;
 
-            deathCount++;
-            finalRemoteInputs.resultRed = deathCount;
-
-            result.text = finalRemoteInputs.resultRed.ToString();
+            //Red Player death counter
+            resultManager.redDeathCount++;
+            redResult.text = resultManager.redDeathCount.ToString();
         }
     }
-    
 } 
 

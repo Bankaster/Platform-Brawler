@@ -9,22 +9,18 @@ public class BrawlerController : MonoBehaviour
     public float rotationSpeed = 100f;
     public float deathCount = 0;
 
-    public TextMeshProUGUI result;
-
     public Vector3 respawnPosition = new Vector3(0f, 3f, 0f);
     private Rigidbody rb;
     public Rigidbody rbPusher;
     private Animator player_animator;
 
-    public RemoteInputs reInputs;
-
+    public TextMeshProUGUI blueResult;
+    public OnlineManager resultManager;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-
-        reInputs = GameObject.FindGameObjectWithTag("OnlineManager").GetComponent<RemoteInputs>();
 
         if (rb == null)
         {
@@ -89,11 +85,9 @@ public class BrawlerController : MonoBehaviour
             rbPusher.velocity = Vector3.zero;
             rbPusher.angularVelocity = Vector3.zero;
 
-            deathCount++;
-            reInputs.resultBlue = deathCount;
-
-            result.text = reInputs.resultBlue.ToString();
-            
+            //Blue Player death counter
+            resultManager.blueDeathCount++;
+            blueResult.text = resultManager.blueDeathCount.ToString();
         }
     }
 }

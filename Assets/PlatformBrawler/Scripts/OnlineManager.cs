@@ -18,14 +18,18 @@ public class OnlineManager : MonoBehaviour
     public TextMeshProUGUI countdownText;
     public TextMeshProUGUI timerText;
     public GameObject[] players;
-
-    public float gameDuration = 60f;
+    public float gameDuration = 20f;
     private float countdown = 3f;
+
+    public GameObject resultPanel;
+    public TextMeshProUGUI winnerText;
+
+    public float blueDeathCount = 0;
+    public float redDeathCount = 0;
 
     private void Awake()
     {
         instance = this;
-
     }
 
     // Start is called before the first frame update
@@ -80,10 +84,13 @@ public class OnlineManager : MonoBehaviour
             timeLeft--;
         }
 
-        //Disables player movement control scripts
+        CheckWinner();
+
+        //Method that ends the game
         EndGame();
     }
 
+    //Disables player movement control scripts
     private void EndGame()
     {
         countdownText.text = "Finish!";
@@ -93,6 +100,63 @@ public class OnlineManager : MonoBehaviour
         Player2Controller.enabled = false;
         Player1RemoteController.enabled = false;
         Player2RemoteController.enabled = false;
+    }
+
+    //Compares players death counts to decide the winner
+    private void CheckWinner()
+    {
+        if (redDeathCount > blueDeathCount)
+        {
+            ShowWinner("Player1");
+        }
+        else if (blueDeathCount > redDeathCount)
+        {
+            ShowWinner("Player2");
+        }
+        else if (blueDeathCount == redDeathCount)
+        {
+            ShowWinner("Draw");
+        }
+    }
+
+    //Show the winner on screen
+    public void ShowWinner(string winner)
+    {
+        resultPanel.SetActive(true);
+
+        if (winner == "Player1")
+        {
+            winnerText.text = "Blue Robot Wins!";
+            winnerText.color = Color.blue;
+        }
+        else if (winner == "Player2")
+        {
+            winnerText.text = "Red Robot Wins!";
+            winnerText.color = Color.red;
+        }
+        else if (winner == "Draw")
+        {
+            winnerText.text = "It's a Draw!";
+            winnerText.color = Color.green;
+        }
+
+        StartCoroutine(ShowResultWithEffect());
+    }
+
+    //Add animations to the result panel
+    private IEnumerator ShowResultWithEffect()
+    {
+        //Panel Scaling animation
+        resultPanel.transform.localScale = Vector3.zero;
+        float duration = 0.5f;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            resultPanel.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, elapsed / duration);
+            yield return null;
+        }
     }
 
     // Update is called once per frame
