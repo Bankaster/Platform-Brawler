@@ -15,14 +15,16 @@ public class OnlineManager : MonoBehaviour
     [SerializeField] RemotePlayerController Player1RemoteController;
     [SerializeField] RemotePlayerController Player2RemoteController;
 
+    public GameObject gameMenu;
+    public GameObject deathCounter;
+    public GameObject timer;
+    public GameObject resultPanel;
+
     public TextMeshProUGUI countdownText;
     public TextMeshProUGUI timerText;
-    public GameObject[] players;
+    public TextMeshProUGUI winnerText;
     public float gameDuration = 20f;
     private float countdown = 3f;
-
-    public GameObject resultPanel;
-    public TextMeshProUGUI winnerText;
 
     public TextMeshProUGUI blueResult;
     public TextMeshProUGUI redResult;
@@ -79,17 +81,23 @@ public class OnlineManager : MonoBehaviour
     {
         float timeLeft = gameDuration;
 
-        while (timeLeft > 0)
+        while (timeLeft != 0)
         {
             timerText.text = Mathf.CeilToInt(timeLeft).ToString();
-            yield return new WaitForSeconds(1f);
             timeLeft--;
+            yield return new WaitForSeconds(1f);
         }
-
-        CheckWinner();
 
         //Method that ends the game
         EndGame();
+
+        //Method that shows the winner player
+        CheckWinner();
+
+        yield return new WaitForSeconds(5f);
+
+        //Shows the Game Menu
+        ShowGameMenu();
     }
 
     //Disables player movement control scripts
@@ -102,6 +110,9 @@ public class OnlineManager : MonoBehaviour
         Player2Controller.enabled = false;
         Player1RemoteController.enabled = false;
         Player2RemoteController.enabled = false;
+
+        deathCounter.gameObject.SetActive(false);
+        timer.gameObject.SetActive(false);
     }
 
     //Compares players death counts to decide the winner
@@ -109,21 +120,22 @@ public class OnlineManager : MonoBehaviour
     {
         if (redDeathCount > blueDeathCount)
         {
-            ShowWinner("Player1");
+            StartCoroutine(ShowWinner("Player1"));
         }
         else if (blueDeathCount > redDeathCount)
         {
-            ShowWinner("Player2");
+            StartCoroutine(ShowWinner("Player2"));
         }
         else if (blueDeathCount == redDeathCount)
         {
-            ShowWinner("Draw");
+            StartCoroutine(ShowWinner("Draw"));
         }
     }
 
     //Show the winner on screen
-    public void ShowWinner(string winner)
+    private IEnumerator ShowWinner(string winner)
     {
+        yield return new WaitForSeconds(2f);
         resultPanel.SetActive(true);
 
         if (winner == "Player1")
@@ -159,6 +171,12 @@ public class OnlineManager : MonoBehaviour
             resultPanel.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, elapsed / duration);
             yield return null;
         }
+    }
+
+    //Enables the game menu
+    public void ShowGameMenu()
+    {
+        gameMenu.SetActive(true);
     }
 
     // Update is called once per frame
