@@ -1148,7 +1148,7 @@ MonoBehaviour:
   countdownText: {fileID: 1396234246}
   timerText: {fileID: 1304096297}
   winnerText: {fileID: 1837752802}
-  gameDuration: 20
+  gameDuration: 200
   blueResult: {fileID: 1528940254}
   redResult: {fileID: 128268364}
   blueDeathCount: 0
@@ -1180,7 +1180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8b4e3adc3cf85c4d9c77bba9ea61136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharController: {fileID: 0}
+  CharController: {fileID: 554121820}
 --- !u!1 &489286198
 GameObject:
   m_ObjectHideFlags: 0

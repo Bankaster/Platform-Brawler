@@ -73,7 +73,8 @@ public class RemotePlayerController : MonoBehaviour
 
     public void ResetForce()
     {
-        rbPusher.AddForce(0, 0, 0);
+        rbPusher.velocity = Vector3.zero;
+        rbPusher.angularVelocity = Vector3.zero;
     }
 
     IEnumerator UpdatePositionCo()
