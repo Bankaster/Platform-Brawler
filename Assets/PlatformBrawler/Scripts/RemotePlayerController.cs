@@ -17,7 +17,6 @@ public class RemotePlayerController : MonoBehaviour
     public Rigidbody rbPusher;
     private Animator remote_player_animator;
 
-    public OnlineManager resultManager;
 
     void Start()
     {
@@ -109,8 +108,8 @@ public class RemotePlayerController : MonoBehaviour
             rbPusher.angularVelocity = Vector3.zero;
 
             //Red Player death counter
-            resultManager.redDeathCount++;
-            resultManager.redResult.text = resultManager.redDeathCount.ToString();
+            OnlineManager.instance.redDeathCount++;
+            OnlineManager.instance.redResult.text = OnlineManager.instance.redDeathCount.ToString();
         }
     }
 } 

@@ -14,7 +14,6 @@ public class BrawlerController : MonoBehaviour
     public Rigidbody rbPusher;
     private Animator player_animator;
 
-    public OnlineManager resultManager;
 
     // Start is called before the first frame update
     void Start()
@@ -86,8 +85,8 @@ public class BrawlerController : MonoBehaviour
             rbPusher.angularVelocity = Vector3.zero;
 
             //Blue Player death counter
-            resultManager.blueDeathCount++;
-            resultManager.blueResult.text = resultManager.blueDeathCount.ToString();
+            OnlineManager.instance.blueDeathCount++;
+            OnlineManager.instance.blueResult.text = OnlineManager.instance.blueDeathCount.ToString();
         }
     }
 }
