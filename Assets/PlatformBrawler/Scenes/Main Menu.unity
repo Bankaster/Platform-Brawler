@@ -1946,7 +1946,7 @@ PrefabInstance:
     - target: {fileID: 1226822539517599112, guid: 8bda2b229956441329797aa7bc0d180f, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 71735f4f9e8fa964ca2e3dee5aae62e9, type: 3}
+      objectReference: {fileID: 21300000, guid: 6c97c6a5d39902c48b902eb23069dd84, type: 3}
     - target: {fileID: 1226822539517599112, guid: 8bda2b229956441329797aa7bc0d180f, type: 3}
       propertyPath: m_Maskable
       value: 1
