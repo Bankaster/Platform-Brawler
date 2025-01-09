@@ -90,7 +90,7 @@ public class ServerUDP : MonoBehaviour
     void Receive()
     {
         int recv;
-        byte[] data = new byte[1024];
+        byte[] data = new byte[2048];
 
         //We don't know who may be communicating with this server, so we have to create an
         //endpoint with any address and an IPEndPoint from it to reply to it later.
@@ -125,7 +125,7 @@ public class ServerUDP : MonoBehaviour
         while (!exitGameLoop)
         {
             if (OnlineManager.instance == null || Serialize.instance == null) continue;
-            byte[] data = new byte[1024]; 
+            byte[] data = new byte[2048]; 
             data = Serialize.instance.SerializeJson().GetBuffer();
             socket.SendTo(data, data.Length, SocketFlags.None, RemoteClient);
         }
@@ -142,7 +142,7 @@ public class ServerUDP : MonoBehaviour
                 continue;
             }
 
-            byte[] receiveData = new byte[1024];
+            byte[] receiveData = new byte[2048];
             socket.ReceiveFrom(receiveData, ref RemoteClient);
             Serialize.instance.DeserializeJson(receiveData, ref remoteInputs);
         }

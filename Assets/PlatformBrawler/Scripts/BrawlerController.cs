@@ -7,7 +7,7 @@ public class BrawlerController : MonoBehaviour
 {
     public float movSpeed = 10f;
     public float rotationSpeed = 100f;
-    public float deathCount = 0;
+    //public float deathCount = 0;
 
     public Vector3 respawnPosition = new Vector3(0f, 3f, 0f);
     private Rigidbody rb;
@@ -87,6 +87,19 @@ public class BrawlerController : MonoBehaviour
             //Blue Player death counter
             OnlineManager.instance.blueDeathCount++;
             OnlineManager.instance.blueResult.text = OnlineManager.instance.blueDeathCount.ToString();
+        }
+
+        if (other.CompareTag("Death") & this.CompareTag("Player2"))
+        {
+            transform.position = respawnPosition;
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            rbPusher.velocity = Vector3.zero;
+            rbPusher.angularVelocity = Vector3.zero;
+
+            //Blue Player death counter
+            OnlineManager.instance.redDeathCount++;
+            OnlineManager.instance.redResult.text = OnlineManager.instance.redDeathCount.ToString();
         }
     }
 }

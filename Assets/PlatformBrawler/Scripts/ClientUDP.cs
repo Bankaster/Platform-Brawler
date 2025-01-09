@@ -108,7 +108,7 @@ public class ClientUDP : MonoBehaviour
     {
         IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
         RemoteServer = (EndPoint)sender;
-        byte[] data = new byte[1024];
+        byte[] data = new byte[2048];
         int recv = socket.ReceiveFrom(data, ref RemoteServer);
 
         clientText = $"Message received from {RemoteServer.ToString()}:";
@@ -125,7 +125,7 @@ public class ClientUDP : MonoBehaviour
         while (!exitGameLoop)
         {
             if (OnlineManager.instance == null || Serialize.instance == null) continue;
-            byte[] sendData = new byte[1024];
+            byte[] sendData = new byte[2048];
             sendData = Serialize.instance.SerializeJson().GetBuffer();
             socket.SendTo(sendData, sendData.Length, SocketFlags.None, ipep);
         }
@@ -142,7 +142,7 @@ public class ClientUDP : MonoBehaviour
                 continue;
             }
 
-            byte[] receiveData = new byte[1024];
+            byte[] receiveData = new byte[2048];
             socket.ReceiveFrom(receiveData, ref RemoteServer);
             Serialize.instance.DeserializeJson(receiveData, ref remoteInputs);
         }

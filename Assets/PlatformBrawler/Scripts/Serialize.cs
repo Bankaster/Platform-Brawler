@@ -74,14 +74,14 @@ public class Serialize : MonoBehaviour
         remoteInputs.pos = CharController.transform.position;
         remoteInputs.rot = CharController.transform.rotation.y;
 
-       // remoteInputs.resultBlue = CharController.GetComponent<BrawlerController>().deathCount;
-      //  remoteInputs.resultRed = CharController.GetComponent<RemotePlayerController>().deathCount; ;
-
+        remoteInputs.resultBlue = OnlineManager.instance.blueDeathCount;
+        remoteInputs.resultRed = OnlineManager.instance.redDeathCount;
     }
 
     public MemoryStream SerializeJson()
     {
         string json = JsonUtility.ToJson(remoteInputs);
+       // Debug.Log($"JSON generado: {json}");
         stream = new MemoryStream();
         BinaryWriter writer = new BinaryWriter(stream);
         writer.Write(json);
@@ -95,6 +95,7 @@ public class Serialize : MonoBehaviour
         BinaryReader reader = new BinaryReader(stream);
         stream.Seek(0, SeekOrigin.Begin);
         string json = reader.ReadString();
+        Debug.Log($"JSON recibido: {json}");
         JsonUtility.FromJsonOverwrite(json, serializedThings);
     }
 }
