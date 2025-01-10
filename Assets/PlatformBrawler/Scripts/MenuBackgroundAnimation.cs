@@ -7,8 +7,8 @@ public class MenuBackgroundAnimation : MonoBehaviour
     public GameObject image1;
     public GameObject image2;
     public float speed = 50f;
-    public float resetPosition = -587f;
-    public float startPosition = 1763f;
+    public float resetPosition = -1496f;
+    public float startPosition = 3900f;
 
     void Update()
     {
