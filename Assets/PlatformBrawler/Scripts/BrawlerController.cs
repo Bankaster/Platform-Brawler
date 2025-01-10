@@ -9,8 +9,11 @@ public class BrawlerController : MonoBehaviour
     public float rotationSpeed = 100f;
     //public float deathCount = 0;
 
-    public Vector3 respawnPosition = new Vector3(0f, 3f, 0f);
-    private Rigidbody rb;
+    public GameObject player1;
+    public GameObject player2;
+
+    public Vector3 respawnPosition = new Vector3(0f, 4f, 0f);
+    public Rigidbody rb;
     public Rigidbody rbPusher;
     private Animator player_animator;
 
@@ -52,7 +55,7 @@ public class BrawlerController : MonoBehaviour
         }
 
         //Player Attack
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
         {
             player_animator.SetTrigger("Attack");
         }
@@ -72,11 +75,11 @@ public class BrawlerController : MonoBehaviour
         rbPusher.velocity = Vector3.zero; 
         rbPusher.angularVelocity = Vector3.zero;
     }
-
+    /*
     void OnTriggerEnter(Collider other)
     {
         //Respawn Function
-        if (other.CompareTag("Death") & this.CompareTag("Player1"))
+        if (other.CompareTag("Death") & player1.CompareTag("Player1"))
         {
             transform.position = respawnPosition;
             rb.velocity = Vector3.zero;
@@ -89,7 +92,7 @@ public class BrawlerController : MonoBehaviour
             OnlineManager.instance.blueResult.text = OnlineManager.instance.blueDeathCount.ToString();
         }
 
-        if (other.CompareTag("Death") & this.CompareTag("Player2"))
+        if (other.CompareTag("Death") & player2.CompareTag("Player2"))
         {
             transform.position = respawnPosition;
             rb.velocity = Vector3.zero;
@@ -101,5 +104,6 @@ public class BrawlerController : MonoBehaviour
             OnlineManager.instance.redDeathCount++;
             OnlineManager.instance.redResult.text = OnlineManager.instance.redDeathCount.ToString();
         }
-    }
+    } 
+    */
 }

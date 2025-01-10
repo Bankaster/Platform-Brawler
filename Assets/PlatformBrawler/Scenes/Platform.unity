@@ -1306,6 +1306,7 @@ GameObject:
   m_Component:
   - component: {fileID: 251415765}
   - component: {fileID: 251415764}
+  - component: {fileID: 251415766}
   m_Layer: 0
   m_Name: DeathCollider
   m_TagString: Death
@@ -1349,6 +1350,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &251415766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251415763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 591179fa57ff6fc429340149ced31793, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player1: {fileID: 554121820}
+  player2: {fileID: 1232947756}
+  Player1Controller: {fileID: 554121822}
+  Player2Controller: {fileID: 1232947759}
+  Player1RemoteController: {fileID: 554121821}
+  Player2RemoteController: {fileID: 1232947758}
 --- !u!1 &302725771
 GameObject:
   m_ObjectHideFlags: 0
@@ -1716,8 +1735,8 @@ MonoBehaviour:
   timerText: {fileID: 1304096297}
   winnerText: {fileID: 1837752802}
   gameDuration: 60
-  blueResult: {fileID: 1528940254}
-  redResult: {fileID: 128268364}
+  blueResultText: {fileID: 1528940254}
+  redResultText: {fileID: 128268364}
   blueDeathCount: 0
   redDeathCount: 0
 --- !u!4 &460227486
@@ -2033,8 +2052,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   finalRemoteInputs: {fileID: 0}
   rotationSpeed: 100
-  deathCount: 0
+  player1: {fileID: 554121820}
+  player2: {fileID: 1232947756}
   respawnPosition: {x: 0, y: 5, z: 0}
+  rb: {fileID: 0}
   rbPusher: {fileID: 799697356}
 --- !u!114 &554121822
 MonoBehaviour:
@@ -2050,8 +2071,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movSpeed: 10
   rotationSpeed: 100
-  deathCount: 0
+  player1: {fileID: 554121820}
+  player2: {fileID: 1232947756}
   respawnPosition: {x: 0, y: 5, z: 0}
+  rb: {fileID: 0}
   rbPusher: {fileID: 799697356}
 --- !u!54 &554121823
 Rigidbody:
@@ -3858,8 +3881,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   finalRemoteInputs: {fileID: 0}
   rotationSpeed: 100
-  deathCount: 0
+  player1: {fileID: 554121820}
+  player2: {fileID: 1232947756}
   respawnPosition: {x: 0, y: 5, z: 0}
+  rb: {fileID: 0}
   rbPusher: {fileID: 1045689749}
 --- !u!114 &1232947759
 MonoBehaviour:
@@ -3875,8 +3900,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movSpeed: 10
   rotationSpeed: 100
-  deathCount: 0
+  player1: {fileID: 554121820}
+  player2: {fileID: 1232947756}
   respawnPosition: {x: 0, y: 5, z: 0}
+  rb: {fileID: 0}
   rbPusher: {fileID: 1045689749}
 --- !u!54 &1232947760
 Rigidbody:

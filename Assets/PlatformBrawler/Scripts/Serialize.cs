@@ -76,6 +76,7 @@ public class Serialize : MonoBehaviour
 
         remoteInputs.resultBlue = OnlineManager.instance.blueDeathCount;
         remoteInputs.resultRed = OnlineManager.instance.redDeathCount;
+
     }
 
     public MemoryStream SerializeJson()

@@ -26,8 +26,8 @@ public class OnlineManager : MonoBehaviour
     public float gameDuration = 20f;
     private float countdown = 3f;
 
-    public TextMeshProUGUI blueResult;
-    public TextMeshProUGUI redResult;
+    public TextMeshProUGUI blueResultText;
+    public TextMeshProUGUI redResultText;
     public float blueDeathCount = 0;
     public float redDeathCount = 0;
 
