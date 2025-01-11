@@ -6,6 +6,8 @@ public class AudioSettingsManager : MonoBehaviour
 {
     public static AudioSettingsManager instance;
 
+    public GameObject audioMenu;
+
     public AudioMixer audioMixer;
     public Slider masterSlider;
     public Slider musicSlider;
@@ -18,9 +20,11 @@ public class AudioSettingsManager : MonoBehaviour
         audioMixer.GetFloat("MusicVolume", out musicVolume);
         audioMixer.GetFloat("SFXVolume", out sfxVolume);
 
-        masterSlider.value = Mathf.Pow(10, masterVolume / 20);
+        masterSlider.value = Mathf.Pow(10, masterVolume / 20) / 3;
         musicSlider.value = Mathf.Pow(10, musicVolume / 20);
         sfxSlider.value = Mathf.Pow(10, sfxVolume / 20);
+
+        audioMenu.gameObject.SetActive(false);
     }
 
     void Awake()
