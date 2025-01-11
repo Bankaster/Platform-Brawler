@@ -31,6 +31,9 @@ public class OnlineManager : MonoBehaviour
     public float blueDeathCount = 0;
     public float redDeathCount = 0;
 
+    public AudioSource sfxAudioSource;
+    public AudioClip timerSound;
+
     private void Awake()
     {
         instance = this;
@@ -41,10 +44,14 @@ public class OnlineManager : MonoBehaviour
     {
         //Start Countdown
         StartCoroutine(StartCountdown());
+
+        sfxAudioSource = GetComponent<AudioSource>();
     }
 
     private IEnumerator StartCountdown()
     {
+        sfxAudioSource.PlayOneShot(timerSound);
+
         //Show Countdown in Screen
         while (countdown > 0)
         {
@@ -54,8 +61,7 @@ public class OnlineManager : MonoBehaviour
         }
 
         countdownText.text = "Start!";
-        yield return new WaitForSeconds(1f);
-
+        yield return new WaitForSeconds(0.7f);
 
         //Hide Countdown and enables player movement control scripts
         countdownText.gameObject.SetActive(false);

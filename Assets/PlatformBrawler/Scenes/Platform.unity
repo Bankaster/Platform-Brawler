@@ -1675,7 +1675,7 @@ AudioSource:
   m_GameObject: {fileID: 386458196}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 3761098739066266449, guid: 6dd4f1e9ab6fece46a5eb43f6a23ad4b, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -1931,6 +1931,12 @@ MonoBehaviour:
   redResultText: {fileID: 128268364}
   blueDeathCount: 0
   redDeathCount: 0
+  sfxAudioSource: {fileID: 386458197}
+  timerSound: {fileID: 8300000, guid: 47fa0979119dffb4d9df2dff8b37eec6, type: 3}
+  startSound: {fileID: 8300000, guid: 0df183cf6fba08844abefb13b61abb99, type: 3}
+  startVoiceSound: {fileID: 8300000, guid: c16e2bcbabc66c64cb75b58da98c3386, type: 3}
+  finishSound: {fileID: 8300000, guid: 2a094ea64a2038548b7c18aff4bdc3bf, type: 3}
+  finishVoiceSound: {fileID: 8300000, guid: cee3dc28d1c74294ebd7953167c8b7b0, type: 3}
 --- !u!4 &460227486
 Transform:
   m_ObjectHideFlags: 0
@@ -2851,7 +2857,7 @@ AudioSource:
   m_GameObject: {fileID: 809658365}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -8422002445210989610, guid: 6dd4f1e9ab6fece46a5eb43f6a23ad4b, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
