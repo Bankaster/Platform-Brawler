@@ -36,19 +36,20 @@ public class AudioSettingsManager : MonoBehaviour
         }
     }
 
-    public void SetMasterVolume(float value)
+    public void SetMasterVolume()
     {
-        audioMixer.SetFloat("MasterVolume", Mathf.Log10(value) * 20);
+        audioMixer.SetFloat("MasterVolume", Mathf.Log10(masterSlider.value) * 20);
+
     }
 
-    public void SetMusicVolume(float value)
+    public void SetMusicVolume()
     {
-        audioMixer.SetFloat("MusicVolume", Mathf.Log10(value) * 20);
+        audioMixer.SetFloat("MusicVolume", Mathf.Log10(musicSlider.value) * 20);
     }
 
-    public void SetSFXVolume(float value)
+    public void SetSFXVolume()
     {
-        audioMixer.SetFloat("SFXVolume", Mathf.Log10(value) * 20);
+        audioMixer.SetFloat("SFXVolume", Mathf.Log10(sfxSlider.value) * 20);
     }
 }
 
