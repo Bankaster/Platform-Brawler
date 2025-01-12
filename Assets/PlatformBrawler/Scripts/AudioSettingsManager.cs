@@ -23,8 +23,6 @@ public class AudioSettingsManager : MonoBehaviour
         masterSlider.value = Mathf.Pow(10, masterVolume / 20) / 2;
         musicSlider.value = Mathf.Pow(10, musicVolume / 20);
         sfxSlider.value = Mathf.Pow(10, sfxVolume / 20);
-
-        audioMenu.gameObject.SetActive(false);
     }
 
     void Awake()

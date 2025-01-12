@@ -3553,7 +3553,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3411895000281563169, guid: 8bda2b229956441329797aa7bc0d180f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3411895000281563199, guid: 8bda2b229956441329797aa7bc0d180f, type: 3}
       propertyPath: animator
@@ -4101,7 +4101,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8691362910353630632, guid: 8bda2b229956441329797aa7bc0d180f, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.4994995
       objectReference: {fileID: 0}
     - target: {fileID: 8691362910353630632, guid: 8bda2b229956441329797aa7bc0d180f, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4109,7 +4109,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8691362910353630632, guid: 8bda2b229956441329797aa7bc0d180f, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.4994995
       objectReference: {fileID: 0}
     - target: {fileID: 8691362910353630633, guid: 8bda2b229956441329797aa7bc0d180f, type: 3}
       propertyPath: m_Sprite
@@ -4205,7 +4205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8691362910805576849, guid: 8bda2b229956441329797aa7bc0d180f, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.4994995
       objectReference: {fileID: 0}
     - target: {fileID: 8691362910805576849, guid: 8bda2b229956441329797aa7bc0d180f, type: 3}
       propertyPath: m_AnchorMax.y
