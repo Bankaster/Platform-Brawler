@@ -20,7 +20,7 @@ public class AudioSettingsManager : MonoBehaviour
         audioMixer.GetFloat("MusicVolume", out musicVolume);
         audioMixer.GetFloat("SFXVolume", out sfxVolume);
 
-        masterSlider.value = Mathf.Pow(10, masterVolume / 20) / 3;
+        masterSlider.value = Mathf.Pow(10, masterVolume / 20) / 2;
         musicSlider.value = Mathf.Pow(10, musicVolume / 20);
         sfxSlider.value = Mathf.Pow(10, sfxVolume / 20);
 

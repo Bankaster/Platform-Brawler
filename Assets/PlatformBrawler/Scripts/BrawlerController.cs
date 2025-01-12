@@ -7,7 +7,6 @@ public class BrawlerController : MonoBehaviour
 {
     public float movSpeed = 10f;
     public float rotationSpeed = 100f;
-    //public float deathCount = 0;
 
     public GameObject player1;
     public GameObject player2;
@@ -17,6 +16,8 @@ public class BrawlerController : MonoBehaviour
     public Rigidbody rbPusher;
     private Animator player_animator;
 
+    public AudioSource sfxAudioSource;
+    public AudioClip attackSound;
 
     // Start is called before the first frame update
     void Start()
@@ -64,6 +65,8 @@ public class BrawlerController : MonoBehaviour
     //Player Attack Event
     public void AddForce()
     {
+        sfxAudioSource.PlayOneShot(attackSound);
+
         float forceMagnitude = 20f;
         Vector3 forceDirection = transform.right;
         Vector3 force = forceDirection * forceMagnitude;
@@ -75,35 +78,4 @@ public class BrawlerController : MonoBehaviour
         rbPusher.velocity = Vector3.zero; 
         rbPusher.angularVelocity = Vector3.zero;
     }
-    /*
-    void OnTriggerEnter(Collider other)
-    {
-        //Respawn Function
-        if (other.CompareTag("Death") & player1.CompareTag("Player1"))
-        {
-            transform.position = respawnPosition;
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-            rbPusher.velocity = Vector3.zero;
-            rbPusher.angularVelocity = Vector3.zero;
-
-            //Blue Player death counter
-            OnlineManager.instance.blueDeathCount++;
-            OnlineManager.instance.blueResult.text = OnlineManager.instance.blueDeathCount.ToString();
-        }
-
-        if (other.CompareTag("Death") & player2.CompareTag("Player2"))
-        {
-            transform.position = respawnPosition;
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-            rbPusher.velocity = Vector3.zero;
-            rbPusher.angularVelocity = Vector3.zero;
-
-            //Blue Player death counter
-            OnlineManager.instance.redDeathCount++;
-            OnlineManager.instance.redResult.text = OnlineManager.instance.redDeathCount.ToString();
-        }
-    } 
-    */
 }

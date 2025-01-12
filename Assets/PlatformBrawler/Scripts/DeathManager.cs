@@ -7,6 +7,9 @@ public class DeathManager : MonoBehaviour
     public GameObject player1;
     public GameObject player2;
 
+    public AudioSource sfxAudioSource;
+    public AudioClip deathSound;
+
     [SerializeField] BrawlerController Player1Controller;
     [SerializeField] BrawlerController Player2Controller;
     [SerializeField] RemotePlayerController Player1RemoteController;
@@ -61,9 +64,36 @@ public class DeathManager : MonoBehaviour
                 Player2RemoteController.rbPusher.angularVelocity = Vector3.zero;
             }
 
-            //Blue Player death counter
+            //Red Player death counter
             OnlineManager.instance.redDeathCount++;
             OnlineManager.instance.redResultText.text = OnlineManager.instance.redDeathCount.ToString();
+        }
+
+
+
+        //Death sound Trigger
+        if (this.CompareTag("Space") && other.CompareTag("Player1"))
+        {
+            if (Player1Controller != null && !Player1RemoteController.isActiveAndEnabled)
+            {
+                sfxAudioSource.PlayOneShot(deathSound);
+            }
+            else if (Player1RemoteController != null && !Player1Controller.isActiveAndEnabled)
+            {
+                sfxAudioSource.PlayOneShot(deathSound);
+            }
+        }
+
+        if (this.CompareTag("Space") && other.CompareTag("Player2"))
+        {
+            if (Player2Controller != null && !Player2RemoteController.isActiveAndEnabled)
+            {
+                sfxAudioSource.PlayOneShot(deathSound);
+            }
+            else if (Player2RemoteController != null && !Player2Controller.isActiveAndEnabled)
+            {
+                sfxAudioSource.PlayOneShot(deathSound);
+            }
         }
     }
 }

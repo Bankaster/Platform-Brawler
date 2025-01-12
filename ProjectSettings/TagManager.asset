@@ -10,6 +10,7 @@ TagManager:
   - OnlineManager
   - Player1
   - Player2
+  - Space
   layers:
   - Default
   - TransparentFX

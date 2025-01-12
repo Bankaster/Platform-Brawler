@@ -141,7 +141,7 @@ public class OnlineManager : MonoBehaviour
     //Show the winner on screen
     private IEnumerator ShowWinner(string winner)
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         resultPanel.SetActive(true);
 
         if (winner == "Player1")
